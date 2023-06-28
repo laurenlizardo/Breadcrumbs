@@ -14,6 +14,10 @@ public class Eat : IState
 
     public void OnEnter()
     {
+        // Start animation
+        _animal.ChangeAnimation(_animal.EatAnimation);
+        
+        // Track the moment in time the animal begins to eat
         StartTime = Time.time;
     }
 

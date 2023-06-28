@@ -1,6 +1,6 @@
 ﻿public interface IState
 {
-    // Use for setup, initializiations.
+    // Use for setup, initializations.
     void OnEnter();
     
     // Use in the Update loop

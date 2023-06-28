@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Breadcrumb : MonoBehaviour
@@ -17,7 +14,19 @@ public class Breadcrumb : MonoBehaviour
     private Rigidbody _rigidbody;
     public Rigidbody Rigidbody => _rigidbody;
 
-    public bool IsActive;
+    private bool _isActive;
+
+    public bool IsActive
+    {
+        get
+        {
+            return _isActive;
+        }
+        set
+        {
+            _isActive = value;
+        }
+    }
 
     private void Awake()
     {

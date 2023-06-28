@@ -15,7 +15,8 @@ public class Walk : IState
 
     public void OnEnter()
     {
-        
+        // Start animation
+        _animal.ChangeAnimation(_animal.WalkAnimation);
     }
 
     public void Tick()

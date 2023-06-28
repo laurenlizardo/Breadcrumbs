@@ -1,14 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
 
 public class BreadcrumbLauncher : MonoBehaviour
 {
     [SerializeField] private Breadcrumb _breadcrumb;
     [SerializeField] private float _launchPower;
+    [SerializeField] private GameObject _tiltFivePrefab;
     
     public void LaunchBreadcrumb()
     {
@@ -19,6 +16,14 @@ public class BreadcrumbLauncher : MonoBehaviour
     public void RetrieveBreadcrumb()
     {
         _breadcrumb.IsActive = false;
+    }
+
+    private void Start()
+    {
+        if (!_tiltFivePrefab.activeSelf)
+        {
+            _breadcrumb.transform.position = new Vector3(0, 5, -3);
+        }
     }
 
     private void Update()

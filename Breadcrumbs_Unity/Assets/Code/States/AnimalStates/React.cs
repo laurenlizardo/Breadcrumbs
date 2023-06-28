@@ -14,7 +14,10 @@ public class React : IState
 
     public void OnEnter()
     {
-        // Track the time of the start of the state
+        // Start animation
+        _animal.ChangeAnimation(_animal.ReactAnimation);
+        
+        // Track the moment in time the animal begins to react
         StartTime = Time.time;
     }
 

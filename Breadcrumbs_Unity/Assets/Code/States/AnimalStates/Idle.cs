@@ -12,12 +12,10 @@ public class Idle : IState
     public void OnEnter()
     {
         // Start animation
+        _animal.ChangeAnimation(_animal.IdleAnimation);
     }
 
-    public void Tick()
-    {
-        
-    }
+    public void Tick() { }
     
     public void OnExit() {}
 }
