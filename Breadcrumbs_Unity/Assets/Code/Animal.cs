@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Animal : MonoBehaviour
 {
@@ -43,12 +44,17 @@ public class Animal : MonoBehaviour
     // Private variables
     private StateMachine _stateMachine;
     private Animator _animator;
+    private NavMeshAgent _navMeshAgent;
+    
+    // Properties
+    public NavMeshAgent NavMeshAgent => _navMeshAgent;
 
     private void Awake()
     {
         _stateMachine = new StateMachine();
         _animator = GetComponent<Animator>();
-        
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+
         // States
         var idle = new Idle(this);
         var react = new React(this, _breadcrumb);

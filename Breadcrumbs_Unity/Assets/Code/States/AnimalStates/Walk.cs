@@ -31,10 +31,12 @@ public class Walk : IState
                     _breadcrumb.transform.position.z));
         
             // Walk towards the breadcrumb
-            _animal.transform.position = Vector3.MoveTowards(
-                _animal.transform.position, 
-                _breadcrumb.transform.position, 
-                Time.deltaTime * _moveSpeed);
+            // _animal.transform.position = Vector3.MoveTowards(
+            //     _animal.transform.position, 
+            //     _breadcrumb.transform.position, 
+            //     Time.deltaTime * _moveSpeed);
+
+            _animal.NavMeshAgent.SetDestination(_breadcrumb.transform.position);
         }
     }
     
