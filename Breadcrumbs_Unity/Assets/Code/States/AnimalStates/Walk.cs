@@ -36,6 +36,7 @@ public class Walk : IState
             //     _breadcrumb.transform.position, 
             //     Time.deltaTime * _moveSpeed);
 
+            _animal.NavMeshAgent.isStopped = false;
             _animal.NavMeshAgent.SetDestination(_breadcrumb.transform.position);
         }
     }

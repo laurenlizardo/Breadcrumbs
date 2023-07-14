@@ -13,6 +13,8 @@ public class Idle : IState
     {
         // Start animation
         _animal.ChangeAnimation(_animal.IdleAnimation);
+
+        _animal.NavMeshAgent.isStopped = true;
     }
 
     public void Tick() { }
