@@ -251,9 +251,9 @@ MonoBehaviour:
   _breadcrumb: {fileID: 2393412089595214539}
   _walkSpeed: 0
   _detectionDistance: 4
-  _eatDistance: 0.4
-  _totalReactionTime: 1
-  _totalEatTime: 2
+  _eatDistance: 0.6
+  _totalReactionTime: 2
+  _totalEatTime: 3
   _idleAnimation: Idle_A
   _reactAnimation: Jump
   _walkAnimation: Walk

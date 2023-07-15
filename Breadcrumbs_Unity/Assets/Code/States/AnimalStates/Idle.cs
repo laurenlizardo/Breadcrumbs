@@ -14,6 +14,7 @@ public class Idle : IState
         // Start animation
         _animal.ChangeAnimation(_animal.IdleAnimation);
 
+        // Stop the NavMeshAgent
         _animal.NavMeshAgent.isStopped = true;
     }
 

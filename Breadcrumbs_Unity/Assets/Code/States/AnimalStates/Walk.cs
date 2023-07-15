@@ -24,11 +24,11 @@ public class Walk : IState
         if (_breadcrumb.IsActive)
         {
             // Look at the breadcrumb
-            _animal.transform.LookAt(
-                new Vector3(
-                    _breadcrumb.transform.position.x, 
-                    0, 
-                    _breadcrumb.transform.position.z));
+            // _animal.transform.LookAt(
+            //     new Vector3(
+            //         _breadcrumb.transform.position.x, 
+            //         0, 
+            //         _breadcrumb.transform.position.z));
         
             // Walk towards the breadcrumb
             // _animal.transform.position = Vector3.MoveTowards(
@@ -36,6 +36,7 @@ public class Walk : IState
             //     _breadcrumb.transform.position, 
             //     Time.deltaTime * _moveSpeed);
 
+            // Start the NavMeshAgent
             _animal.NavMeshAgent.isStopped = false;
             _animal.NavMeshAgent.SetDestination(_breadcrumb.transform.position);
         }

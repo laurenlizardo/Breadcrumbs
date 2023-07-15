@@ -14,6 +14,9 @@ public class Eat : IState
 
     public void OnEnter()
     {
+        // Stop the NavMeshAgent
+        _animal.NavMeshAgent.isStopped = true;
+        
         // Start animation
         _animal.ChangeAnimation(_animal.EatAnimation);
         
@@ -23,15 +26,15 @@ public class Eat : IState
 
     public void Tick()
     {
-        if (_breadcrumb.IsActive)
-        {
-            // Look at the breadcrumb
-            _animal.transform.LookAt(
-                new Vector3(
-                    _breadcrumb.transform.position.x, 
-                    0, 
-                    _breadcrumb.transform.position.z));
-        }
+        // if (_breadcrumb.IsActive)
+        // {
+        //     // Look at the breadcrumb
+        //     _animal.transform.LookAt(
+        //         new Vector3(
+        //             _breadcrumb.transform.position.x, 
+        //             0, 
+        //             _breadcrumb.transform.position.z));
+        // }
     }
 
     public void OnExit()
