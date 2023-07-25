@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class Idle : IState
+﻿public class Idle : IState
 {
     private readonly Animal _animal;
 
@@ -20,5 +18,5 @@ public class Idle : IState
 
     public void Tick() { }
     
-    public void OnExit() {}
+    public void OnExit() { }
 }

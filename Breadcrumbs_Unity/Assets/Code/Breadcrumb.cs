@@ -14,7 +14,7 @@ public class Breadcrumb : MonoBehaviour
     private Rigidbody _rigidbody;
     public Rigidbody Rigidbody => _rigidbody;
 
-    private bool _isActive;
+    [SerializeField] private bool _isActive;
 
     public bool IsActive
     {
@@ -32,18 +32,31 @@ public class Breadcrumb : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
     }
-    
+
     private void Update()
     {
-        if (IsActive)
+        if (!IsActive)
         {
-            _rigidbody.useGravity = true;
+            FollowLauncher();
         }
-        else
-        {
-            _rigidbody.useGravity = false;
-            transform.position = _breadcrumbLauncher.transform.position;
-            transform.rotation = _breadcrumbLauncher.transform.rotation;
-        }
+    }
+
+    public void MakeActive()
+    {
+        _rigidbody.useGravity = true;
+        IsActive = true;
+    }
+
+    public void MakeInactive()
+    {
+        _rigidbody.useGravity = false;
+        _rigidbody.velocity = Vector3.zero;
+        IsActive = false;
+    }
+
+    public void FollowLauncher()
+    {
+        transform.position = _breadcrumbLauncher.transform.position;
+        transform.rotation = _breadcrumbLauncher.transform.rotation;
     }
 }

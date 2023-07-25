@@ -23,14 +23,10 @@ public class React : IState
 
     public void Tick()
     {
-        // Look at the breadcrumb
+        // Look at the breadcrumb the duration of the reaction
         if (_breadcrumb.IsActive)
         {
-            _animal.transform.LookAt(
-                new Vector3(
-                    _breadcrumb.transform.position.x, 
-                    0, 
-                    _breadcrumb.transform.position.z));
+            _animal.transform.LookAt(new Vector3(_breadcrumb.transform.position.x, 0, _breadcrumb.transform.position.z));
         }
     }
     

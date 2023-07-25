@@ -8,10 +8,6 @@ public class Animal : MonoBehaviour
     // Reference to the breadcrumb gameobject
     [SerializeField] private Breadcrumb _breadcrumb;
     
-    [Header("Speeds")]
-    
-    [SerializeField] private float _walkSpeed;
-    
     [Header("Distances")]
     
     // The distance that the animal can detect a breadcrumb
@@ -58,7 +54,7 @@ public class Animal : MonoBehaviour
         // States
         var idle = new Idle(this);
         var react = new React(this, _breadcrumb);
-        var walk = new Walk(this, _breadcrumb, _walkSpeed);
+        var walk = new Walk(this, _breadcrumb);
         var eat = new Eat(this, _breadcrumb);
 
         // Transitions
@@ -66,15 +62,25 @@ public class Animal : MonoBehaviour
         _stateMachine.AddTransition(react, walk, HasReacted());
         _stateMachine.AddTransition(walk, eat, HasReachedBreadcrumb());
         _stateMachine.AddTransition(eat, idle, HasFinishedEating());
+        
+        // Transitions back to idle if the breadcrumb becomes inactive at any time
+        _stateMachine.AddTransition(react, idle, BreadcrumbInactive());
+        _stateMachine.AddTransition(walk, idle,BreadcrumbInactive());
+        _stateMachine.AddTransition(eat, idle, BreadcrumbInactive());
 
         // Conditions
         Func<bool> HasDetectedBreadcrumb() => () =>
-            Vector3.Distance(this.transform.position, _breadcrumb.transform.position) <= _detectionDistance;
-        Func<bool> HasReacted() => () => Time.time - react.StartTime >= _totalReactionTime ? true : false;
+            Vector3.Distance(this.transform.position, _breadcrumb.transform.position) <= _detectionDistance &&
+             _breadcrumb.IsActive;
+        Func<bool> HasReacted() => () => ((Time.time - react.StartTime >= _totalReactionTime ? true : false) &&
+            _breadcrumb.IsActive);
         Func<bool> HasReachedBreadcrumb() => () =>
-            Vector3.Distance(this.transform.position, _breadcrumb.transform.position) <= _eatDistance;
-        Func<bool> HasFinishedEating() => () => Time.time - eat.StartTime >= _totalEatTime ? true : false;
-
+            Vector3.Distance(this.transform.position, _breadcrumb.transform.position) <= _eatDistance &&
+            _breadcrumb.IsActive;
+        Func<bool> HasFinishedEating() => () => (Time.time - eat.StartTime >= _totalEatTime ? true : false) &&
+            _breadcrumb.IsActive;
+        Func<bool> BreadcrumbInactive() => () => !_breadcrumb.IsActive;
+        
         _stateMachine.SetState(idle);
     }
 

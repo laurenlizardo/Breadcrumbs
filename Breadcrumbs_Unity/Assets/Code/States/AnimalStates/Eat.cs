@@ -24,18 +24,7 @@ public class Eat : IState
         StartTime = Time.time;
     }
 
-    public void Tick()
-    {
-        // if (_breadcrumb.IsActive)
-        // {
-        //     // Look at the breadcrumb
-        //     _animal.transform.LookAt(
-        //         new Vector3(
-        //             _breadcrumb.transform.position.x, 
-        //             0, 
-        //             _breadcrumb.transform.position.z));
-        // }
-    }
+    public void Tick() { }
 
     public void OnExit()
     {

@@ -4,13 +4,11 @@ public class Walk : IState
 {
     private readonly Animal _animal;
     private readonly Breadcrumb _breadcrumb;
-    private readonly float _moveSpeed;
 
-    public Walk(Animal animal, Breadcrumb breadcrumb, float moveSpeed)
+    public Walk(Animal animal, Breadcrumb breadcrumb)
     {
         _animal = animal;
         _breadcrumb = breadcrumb;
-        _moveSpeed = moveSpeed;
     }
 
     public void OnEnter()
@@ -23,24 +21,20 @@ public class Walk : IState
     {
         if (_breadcrumb.IsActive)
         {
-            // Look at the breadcrumb
-            // _animal.transform.LookAt(
-            //     new Vector3(
-            //         _breadcrumb.transform.position.x, 
-            //         0, 
-            //         _breadcrumb.transform.position.z));
-        
-            // Walk towards the breadcrumb
-            // _animal.transform.position = Vector3.MoveTowards(
-            //     _animal.transform.position, 
-            //     _breadcrumb.transform.position, 
-            //     Time.deltaTime * _moveSpeed);
-
+            // Look at the breadcrumb the duration of the walk
+            _animal.transform.LookAt(new Vector3(_breadcrumb.transform.position.x, 0, _breadcrumb.transform.position.z));
+            
             // Start the NavMeshAgent
             _animal.NavMeshAgent.isStopped = false;
             _animal.NavMeshAgent.SetDestination(_breadcrumb.transform.position);
         }
     }
-    
-    public void OnExit() { }
+
+    public void OnExit()
+    {
+        // Stop the NavMeshAgent
+        _animal.NavMeshAgent.velocity = Vector3.zero;
+        _animal.NavMeshAgent.isStopped = true;
+        _animal.transform.position = _animal.transform.position;
+    }
 }
