@@ -24,6 +24,7 @@ public class Animal : MonoBehaviour
 
     // The time it takes the animal to eat
     [SerializeField] private float _totalEatTime;
+    public float TotalEatTime => _totalEatTime;
     private float _startEatTime;    // This will be set to Time.time at the time of checking
     
     [Header("Animation strings")]
@@ -37,13 +38,17 @@ public class Animal : MonoBehaviour
     [SerializeField] private string _eatAnimation;
     public string EatAnimation => _eatAnimation;
 
-    // Private variables
+    // Component references
     private StateMachine _stateMachine;
     private Animator _animator;
     private NavMeshAgent _navMeshAgent;
     
     // Properties
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
+    
+    // Breadcrumbs
+    private int _breadcrumbsEaten;
+    public int BreadcrumbsEaten => _breadcrumbsEaten;
 
     private void Awake()
     {
@@ -92,4 +97,16 @@ public class Animal : MonoBehaviour
     }
 
     public void ChangeAnimation(string name) => _animator.Play(name);
+
+    public void IncrementBreadcrumbs()
+    {
+        _breadcrumbsEaten++;
+        _breadcrumb.UpdateTmpText(_breadcrumbsEaten.ToString());
+    }
+
+    public void ResetBreadcrumbs()
+    {
+        _breadcrumbsEaten = 0;
+        _breadcrumb.UpdateTmpText(_breadcrumbsEaten.ToString());
+    }
 }

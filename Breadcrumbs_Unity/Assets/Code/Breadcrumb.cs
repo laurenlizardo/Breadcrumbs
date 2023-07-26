@@ -1,3 +1,5 @@
+using System;
+using TMPro;
 using UnityEngine;
 
 public class Breadcrumb : MonoBehaviour
@@ -16,6 +18,8 @@ public class Breadcrumb : MonoBehaviour
 
     [SerializeField] private bool _isActive;
 
+    [SerializeField] private TMP_Text _tmpText;
+    
     public bool IsActive
     {
         get
@@ -39,6 +43,11 @@ public class Breadcrumb : MonoBehaviour
         {
             FollowLauncher();
         }
+        
+        // if (transform.position.y <= .05f)
+        // {
+        //     transform.position = new Vector3(transform.position.x, .05f, transform.position.z);
+        // }
     }
 
     public void MakeActive()
@@ -58,5 +67,10 @@ public class Breadcrumb : MonoBehaviour
     {
         transform.position = _breadcrumbLauncher.transform.position;
         transform.rotation = _breadcrumbLauncher.transform.rotation;
+    }
+
+    public void UpdateTmpText(string text)
+    {
+        _tmpText.text = string.Format("Breadcrumbs eaten:\n{0}", text);
     }
 }

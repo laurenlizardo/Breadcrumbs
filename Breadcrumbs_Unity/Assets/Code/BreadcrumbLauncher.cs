@@ -1,9 +1,11 @@
+using System.Net.Mime;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class BreadcrumbLauncher : MonoBehaviour
 {
     [SerializeField] private Breadcrumb _breadcrumb;
+    [SerializeField] private Animal _animal;
     [SerializeField] private float _launchPower;
     
     public void LaunchBreadcrumb()
@@ -15,6 +17,11 @@ public class BreadcrumbLauncher : MonoBehaviour
     public void RetrieveBreadcrumb()
     {
         _breadcrumb.MakeInactive();
+    }
+
+    public void Restart()
+    {
+        _animal.ResetBreadcrumbs();
     }
 
     private void Update()
@@ -30,6 +37,17 @@ public class BreadcrumbLauncher : MonoBehaviour
             if (wandDevice.Two.wasPressedThisFrame)
             {
                 RetrieveBreadcrumb();
+            }
+
+            if (wandDevice.X.wasPressedThisFrame)
+            {
+                RetrieveBreadcrumb();
+                Restart();
+            }
+
+            if (wandDevice.B.wasPressedThisFrame)
+            {
+                Application.Quit();
             }
         }
     }
