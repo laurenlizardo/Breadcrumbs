@@ -12,7 +12,7 @@
 */[Ll]ogs/
 */[Mm]emoryCaptures/
 
-*/[Aa]ssets/AssetStoreTools*
+*/_InternalAssets*
 
 # Visual Studio cache directory
 .vs/
