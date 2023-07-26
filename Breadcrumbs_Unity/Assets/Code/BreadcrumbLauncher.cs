@@ -1,27 +1,15 @@
-using System.Net.Mime;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class BreadcrumbLauncher : MonoBehaviour
 {
     [SerializeField] private Breadcrumb _breadcrumb;
     [SerializeField] private Animal _animal;
-    [SerializeField] private float _launchPower;
     
-    public void LaunchBreadcrumb()
+    private void StartOver()
     {
-        _breadcrumb.MakeActive();
-        _breadcrumb.Rigidbody.AddForce(transform.forward * _launchPower, ForceMode.Force);
-    }
-
-    public void RetrieveBreadcrumb()
-    {
-        _breadcrumb.MakeInactive();
-    }
-
-    public void Restart()
-    {
-        _animal.ResetBreadcrumbs();
+        _breadcrumb.Retrieve();
+        _breadcrumb.Clear();
+        _animal.ResetPosition();
     }
 
     private void Update()
@@ -29,20 +17,25 @@ public class BreadcrumbLauncher : MonoBehaviour
         if (TiltFive.Wand.TryGetWandDevice(TiltFive.PlayerIndex.One, TiltFive.ControllerIndex.Right,
                 out TiltFive.WandDevice wandDevice))
         {
-            if (wandDevice.One.wasReleasedThisFrame)
+            if (wandDevice.One.wasPressedThisFrame)
             {
-                LaunchBreadcrumb();
+                if (!_breadcrumb.IsActive)
+                {
+                    _breadcrumb.Launch(); 
+                }
             }
 
             if (wandDevice.Two.wasPressedThisFrame)
             {
-                RetrieveBreadcrumb();
+                if (_breadcrumb.IsActive)
+                {
+                    _breadcrumb.Retrieve();
+                }
             }
-
+            
             if (wandDevice.X.wasPressedThisFrame)
             {
-                RetrieveBreadcrumb();
-                Restart();
+                StartOver();
             }
 
             if (wandDevice.B.wasPressedThisFrame)

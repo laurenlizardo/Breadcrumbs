@@ -30,7 +30,7 @@ public class Eat : IState
     {
         if (Time.time - StartTime >= _animal.TotalEatTime)
         {
-            _animal.IncrementBreadcrumbs();
+            _breadcrumb.Add();
         }
         
         Quaternion lastSavedRotation = _animal.transform.rotation;

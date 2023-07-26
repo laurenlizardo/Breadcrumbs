@@ -1,24 +1,15 @@
-using System;
 using TMPro;
 using UnityEngine;
 
 public class Breadcrumb : MonoBehaviour
 {
-    // States:
-    // 1. Ready: Breadcrumb is at the tip of the wand ready to launch
-    // 2. Launched: Player pressed the button to release the breadcrumb
-    //    and the breadcrumb is "in the air"
-    // 3. Landed: Breadcrumb is on the ground
-    // 4. Eaten: Animal reached the breadcrumb, ate it, and now the
-    //    breadcrumb is gone/eaten
-
     [SerializeField] private BreadcrumbLauncher _breadcrumbLauncher;
-    private Rigidbody _rigidbody;
-    public Rigidbody Rigidbody => _rigidbody;
-
+    [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private TMP_Text _tmpText;
+    [SerializeField] private float _launchPower;
     [SerializeField] private bool _isActive;
 
-    [SerializeField] private TMP_Text _tmpText;
+    private int _breadcrumbsEaten;
     
     public bool IsActive
     {
@@ -31,10 +22,10 @@ public class Breadcrumb : MonoBehaviour
             _isActive = value;
         }
     }
-
-    private void Awake()
+    
+    private void Start()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        MakeInactive();
     }
 
     private void Update()
@@ -43,11 +34,12 @@ public class Breadcrumb : MonoBehaviour
         {
             FollowLauncher();
         }
-        
-        // if (transform.position.y <= .05f)
-        // {
-        //     transform.position = new Vector3(transform.position.x, .05f, transform.position.z);
-        // }
+    }
+
+    private void FollowLauncher()
+    {
+        transform.position = _breadcrumbLauncher.transform.position;
+        transform.rotation = _breadcrumbLauncher.transform.rotation;
     }
 
     public void MakeActive()
@@ -56,21 +48,38 @@ public class Breadcrumb : MonoBehaviour
         IsActive = true;
     }
 
-    public void MakeInactive()
+    private void MakeInactive()
     {
         _rigidbody.useGravity = false;
         _rigidbody.velocity = Vector3.zero;
         IsActive = false;
     }
 
-    public void FollowLauncher()
+    private void UpdateTmpText(string text)
     {
-        transform.position = _breadcrumbLauncher.transform.position;
-        transform.rotation = _breadcrumbLauncher.transform.rotation;
+        _tmpText.text = string.Format("Breadcrumbs\n{0}", text);
     }
 
-    public void UpdateTmpText(string text)
+    public void Launch()
     {
-        _tmpText.text = string.Format("Breadcrumbs eaten:\n{0}", text);
+        MakeActive();
+        _rigidbody.AddForce(transform.forward * _launchPower, ForceMode.Force);
+    }
+
+    public void Retrieve()
+    {
+        MakeInactive();
+    }
+    
+    public void Add()
+    {
+        _breadcrumbsEaten++;
+        UpdateTmpText(_breadcrumbsEaten.ToString());
+    }
+
+    public void Clear()
+    {
+        _breadcrumbsEaten = 0;
+        UpdateTmpText(_breadcrumbsEaten.ToString());
     }
 }

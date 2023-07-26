@@ -4,9 +4,12 @@ using UnityEngine.AI;
 
 public class Animal : MonoBehaviour
 {
-    [Header("Hard references")]
+    [Header("Component references")]
     // Reference to the breadcrumb gameobject
     [SerializeField] private Breadcrumb _breadcrumb;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private NavMeshAgent _navMeshAgent;
+    public NavMeshAgent NavMeshAgent => _navMeshAgent;
     
     [Header("Distances")]
     
@@ -40,21 +43,13 @@ public class Animal : MonoBehaviour
 
     // Component references
     private StateMachine _stateMachine;
-    private Animator _animator;
-    private NavMeshAgent _navMeshAgent;
     
-    // Properties
-    public NavMeshAgent NavMeshAgent => _navMeshAgent;
+    // Location
+    private Vector3 _startPosition;
     
-    // Breadcrumbs
-    private int _breadcrumbsEaten;
-    public int BreadcrumbsEaten => _breadcrumbsEaten;
-
     private void Awake()
     {
         _stateMachine = new StateMachine();
-        _animator = GetComponent<Animator>();
-        _navMeshAgent = GetComponent<NavMeshAgent>();
 
         // States
         var idle = new Idle(this);
@@ -87,6 +82,8 @@ public class Animal : MonoBehaviour
         Func<bool> BreadcrumbInactive() => () => !_breadcrumb.IsActive;
         
         _stateMachine.SetState(idle);
+
+        _startPosition = transform.position;
     }
 
     private void Update() => _stateMachine.Tick();
@@ -97,16 +94,9 @@ public class Animal : MonoBehaviour
     }
 
     public void ChangeAnimation(string name) => _animator.Play(name);
-
-    public void IncrementBreadcrumbs()
+    
+    public void ResetPosition()
     {
-        _breadcrumbsEaten++;
-        _breadcrumb.UpdateTmpText(_breadcrumbsEaten.ToString());
-    }
-
-    public void ResetBreadcrumbs()
-    {
-        _breadcrumbsEaten = 0;
-        _breadcrumb.UpdateTmpText(_breadcrumbsEaten.ToString());
+        transform.position = _startPosition;
     }
 }
