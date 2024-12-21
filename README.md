@@ -1,6 +1,6 @@
 # Breadcrumbs
 
-Portfolio page: [https://www.laurenlizardo.dev/breadcrumbs](https://www.laurenlizardo.dev/breadcrumbs)
+Portfolio page: [https://www.lauren-lizardo.com/work/breadcrumbs](https://www.lauren-lizardo.com/work/breadcrumbs)
 
 ## Project Details
 * Unity version: 2021.3.27f1
